@@ -7,7 +7,9 @@ var amqClient = new NoviceAMQClient({
     port: 5672,
     username: 'guest',
     password: 'guest'
-  });
+  }, null, {
+    senderPort:  3030
+});
 
 
 var server = http.createServer(function(req, res) {
@@ -26,16 +28,18 @@ server.listen(3030, function(){
                     console.error(err);
                 }
                 else{
+                    /*
+                    // fanout (BROADCAST)
                     var ex = 'add:route';
-
-                /**
-                 * fanout (BROADCAST)
-                 */
                     channel.assertExchange(ex, 'fanout', { durable: false });
-
-                    console.log("fanout");
-
                     channel.publish(ex, '', new Buffer(JSON.stringify({path: '/'})));
+                    */
+
+                    // send to queue
+                    var q = 'hello';
+                    channel.assertQueue(q, { durable: false });
+                    // Note: on Node 6 Buffer.from(msg) should be used
+                    channel.sendToQueue(q, new Buffer(new Buffer(JSON.stringify({ path: '/', method: 'get' }))));
                 }
                 
                 setTimeout(() => {
