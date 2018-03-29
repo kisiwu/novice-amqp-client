@@ -1,5 +1,5 @@
 {
-  "name": "novie-amq-client",
+  "name": "novice-amq-client",
   "private": false,
   "version": "0.0.2",
   "description": "'amqplib' wrapper: send messages with predefined headers",
