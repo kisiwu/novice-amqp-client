@@ -1,14 +1,25 @@
 {
   "name": "novie-amq-client",
-  "version": "1.0.0",
-  "description": "",
+  "private": false,
+  "version": "0.0.2",
+  "description": "'amqplib' wrapper: send messages with predefined headers",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kisiwu/novice-amq-client.git"
+  },
   "scripts": {
     "start": "node index.js",
     "test": "node test/test.js"
   },
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "anmqp",
+    "amq",
+    "docker",
+    "messages"
+  ],
+  "author": "demingongo (https://github.com/demingongo)",
+  "license": "MIT",
   "dependencies": {
     "ip": "^1.1.5",
     "amqplib": "^0.5.2"
