@@ -15,6 +15,7 @@ describe("Message to workers", () => {
     conn.createChannel((err, channel) => {
       if (err) {
         Logger.error(err);
+        done(err);
       } else {
         var queue = "worker";
         channel.assertQueue(queue, { durable: false });
@@ -24,6 +25,9 @@ describe("Message to workers", () => {
           queue,
           function(msg) {
             message = msg;
+            // close channel
+            channel.close();
+            // done before
             done();
           },
           {

@@ -1,5 +1,5 @@
 module.exports = {
-	"enableLogs": true,
+	"enableLogs": false,
 	"exitOnFail": true,
 	"directory": "test/tests",
 	"options": {
