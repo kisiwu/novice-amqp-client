@@ -10,7 +10,7 @@
   },
   "scripts": {
     "start": "node index.js",
-    "test": "node test/test.js"
+    "test": "kaukau --config test/config/testconfig.json"
   },
   "keywords": [
     "anmqp",
@@ -23,5 +23,8 @@
   "dependencies": {
     "ip": "^1.1.5",
     "amqplib": "^0.5.2"
+  },
+  "devDependencies": {
+    "kaukau": "0.0.63"
   }
 }

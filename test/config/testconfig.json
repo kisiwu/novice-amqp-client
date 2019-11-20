@@ -1,0 +1,29 @@
+{
+	"enableLogs": true,
+	"exitOnFail": true,
+	"directory": "test/tests",
+	"options": {
+		"bail": false,
+		"fullTrace": true,
+		"grep": "",
+		"ignoreLeaks": false,
+		"reporter": "spec",
+		"retries": 0,
+		"slow": 150,
+		"timeout": 10000,
+		"ui": "bdd",
+		"useColors": true
+	},
+	"parameters": {
+	  "amqp": {
+	    "protocol": "amqp",
+      "hostname": "192.168.99.100",
+      "port": 5672,
+      "username": "guest",
+      "password": "guest"
+		},
+		"defaultHeaders": {
+			"senderPort": 3030
+		}
+	}
+}
