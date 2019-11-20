@@ -10,7 +10,7 @@
   },
   "scripts": {
     "start": "node index.js",
-    "test": "kaukau --config test/config/testconfig.json"
+    "test": "kaukau --config test/config/testconfig.js"
   },
   "keywords": [
     "anmqp",
