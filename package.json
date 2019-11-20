@@ -25,7 +25,6 @@
     "amqplib": "^0.5.2"
   },
   "devDependencies": {
-    "mocha": "6.2.2",
-    "kaukau": "0.0.63"
+    "kaukau": "^0.0.65"
   }
 }
