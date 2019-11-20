@@ -24,9 +24,9 @@ jobs:
         npm test
       env:
         CI: true
-        TEST_PROTOCOL: amqp
-        TEST_HOSTNAME: hound.rmq.cloudamqp.com
-        TEST_PORT: 5672
-        TEST_USERNAME: lxsvqsai
-        TEST_PASSWORD: GYtbHTrczC7Tz5x2klXFvYQjDJ2NIzX_
-        TEST_VHOST: lxsvqsai
+        TEST_PROTOCOL: ${{ secrets.TEST_PROTOCOL }}
+        TEST_HOSTNAME: ${{ secrets.TEST_HOSTNAME }}
+        TEST_PORT: ${{ secrets.TEST_PORT }}
+        TEST_USERNAME: ${{ secrets.TEST_USERNAME }}
+        TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
+        TEST_VHOST: ${{ secrets.TEST_VHOST }}
