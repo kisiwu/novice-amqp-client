@@ -4,7 +4,7 @@ var Tester = kaukau.Tester;
 var Logger = kaukau.Logger;
 var ip = require("ip");
 
-describe("Publish with exchanger", () => {
+describe("Publish/Subscribe", () => {
   var message;
   var messageContent = { data: "Data for subscribers" };
 
@@ -66,8 +66,26 @@ describe("Publish with exchanger", () => {
               function(msg) {
                 message = msg;
 
-                // close channel
-                channel.close();
+                // unbind queue from exchange
+                channel.unbindQueue(q.queue, exchange, "", {}, (err) => {
+                  if(err){
+                    Logger.error(`could not unbind queue from exchange '${exchange}'`);
+                  }
+
+                  // delete exchange
+                  channel.deleteExchange(
+                    exchange,
+                    { ifUnused: false },
+                    (err2) => {
+                      if(err2){
+                        Logger.error(`could not delete exchange '${exchange}'`);
+                      }
+                      // close channel
+                      channel.close();
+                    }
+                  );
+                });
+                
                 done();
               },
               {

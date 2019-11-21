@@ -4,7 +4,7 @@ var Tester = kaukau.Tester;
 var Logger = kaukau.Logger;
 var ip = require('ip');
 
-describe("Message to workers", () => {
+describe("Work queues", () => {
   var message;
   var messageContent = { data: "Data for a worker" };
 
@@ -25,9 +25,24 @@ describe("Message to workers", () => {
           queue,
           function(msg) {
             message = msg;
-            // close channel
-            channel.close();
-            // done before
+
+            // delete queue
+            channel.deleteQueue(
+              queue, 
+              {
+                ifUnused: false,
+                ifEmpty: false
+              },
+              (err2) => {
+                if(err2) {
+                  Logger.error(`could not delete queue '${queue}'`);
+                }
+                // close channel
+                channel.close();
+              }
+            );
+            
+            // done before test
             done();
           },
           {
