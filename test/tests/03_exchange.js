@@ -3,6 +3,7 @@ var Parameters = kaukau.Parameters;
 var Tester = kaukau.Tester;
 var Logger = kaukau.Logger;
 var ip = require("ip");
+var generateId = require('../generateId');
 
 describe("Publish/Subscribe", () => {
   var message;
@@ -11,7 +12,7 @@ describe("Publish/Subscribe", () => {
   // create sender and worker channels
   before(done => {
     var conn = Tester.connection;
-    var exchange = "many";
+    var exchange = `test_many_${generateId()}`;
 
     var publisher = function publisher() {
       // publisher

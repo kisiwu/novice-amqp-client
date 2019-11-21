@@ -3,6 +3,7 @@ var Parameters = kaukau.Parameters;
 var Tester = kaukau.Tester;
 var Logger = kaukau.Logger;
 var ip = require("ip");
+var generateId = require('../generateId');
 
 describe("RPC", () => {
   var request;
@@ -13,6 +14,7 @@ describe("RPC", () => {
   // create sender and worker channels
   before(done => {
     var conn = Tester.connection;
+    var requestQueue = `test_rpc_${generateId()}`;
 
     var client = function client() {
       // client
@@ -53,7 +55,7 @@ describe("RPC", () => {
 
               // send request
               channel.sendToQueue(
-                "rpc_queue",
+                requestQueue,
                 Buffer.from(JSON.stringify(requestContent)),
                 {
                   correlationId: correlationId,
@@ -73,14 +75,14 @@ describe("RPC", () => {
           Logger.error(err);
           done(err);
         } else {
-          channel.assertQueue("rpc_queue", {
+          channel.assertQueue(requestQueue, {
             durable: false
           });
 
           // handle one message at a time (ACK)
           channel.prefetch(1);
 
-          channel.consume("rpc_queue", function reply(msg) {
+          channel.consume(requestQueue, function reply(msg) {
             request = msg;
 
             // if there is a queue to reply to
@@ -100,7 +102,7 @@ describe("RPC", () => {
               // acknowledge message
               channel.ack(msg);
 
-              channel.deleteQueue('rpc_queue');
+              channel.deleteQueue(requestQueue);
 
               channel.close();
             } else {

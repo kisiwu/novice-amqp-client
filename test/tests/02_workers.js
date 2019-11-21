@@ -3,6 +3,7 @@ var Parameters = kaukau.Parameters;
 var Tester = kaukau.Tester;
 var Logger = kaukau.Logger;
 var ip = require('ip');
+var generateId = require('../generateId');
 
 describe("Work queues", () => {
   var message;
@@ -17,25 +18,25 @@ describe("Work queues", () => {
         Logger.error(err);
         done(err);
       } else {
-        var queue = "worker";
-        channel.assertQueue(queue, { durable: false });
+        var workQueue = `test_worker_${generateId()}`;
+        channel.assertQueue(workQueue, { durable: false });
 
         // worker
         channel.consume(
-          queue,
+          workQueue,
           function(msg) {
             message = msg;
 
             // delete queue
             channel.deleteQueue(
-              queue, 
+              workQueue, 
               {
                 ifUnused: false,
                 ifEmpty: false
               },
               (err2) => {
                 if(err2) {
-                  Logger.error(`could not delete queue '${queue}'`);
+                  Logger.error(`could not delete queue '${workQueue}'`);
                 }
                 // close channel
                 channel.close();
@@ -52,7 +53,7 @@ describe("Work queues", () => {
 
         // send to a worker
         channel.sendToQueue(
-          queue,
+          workQueue,
           Buffer.from(JSON.stringify(messageContent))
         );
       }
