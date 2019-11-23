@@ -1,13 +1,14 @@
-var amqp = require('amqplib/callback_api');
 var raw_connect = require('amqplib/lib/connect').connect;
+var bluebird = require('bluebird');
 
 var NoviceAMQPCallbackModel = require('./lib/inherit/NoviceCallbackModel');
+var NoviceAMQPChannelModel = require('./lib/inherit/NoviceChannelModel');
 
 // Supports three shapes:
 // connect(url, options, callback)
 // connect(url, callback)
 // connect(callback)
-function amqplibConnect(url, options, defaultHeaders, cb) {
+function amqplibCallbackConnect(url, options, defaultHeaders, cb) {
     if (typeof url === 'function')
         cb = url, url = false, options = false;
     else if (typeof options === 'function')
@@ -28,30 +29,34 @@ function NoviceAMQClient(connParams, socketOptions, defaultHeaders){
     this.defaultHeaders = defaultHeaders && typeof defaultHeaders === 'object' ? defaultHeaders : {};
 }
 
-NoviceAMQClient.prototype.connect = function connect(){
+// TODO: send a callback in connect to use Callback API. Otherwise use Promise API
+NoviceAMQClient.prototype.connect = function connect(cb){
     var instance = this;
-    return new Promise((res, rej) => {
-        
+
+    // if callback sent, use callback api
+    if(typeof cb === 'function') {
+
+        // already existing instance's connection
         if(instance.conn){
-            return res(instance.conn);
+            return cb(undefined, instance.conn);
         }
 
-        amqplibConnect(
+        amqplibCallbackConnect(
             instance.params, 
             instance.socketOptions, 
             instance.defaultHeaders, 
             function (err, conn) {
-                if (err) {
-                    return rej(err);
-                }
-
-                if (!conn) {
-                    return rej(conn);
-                }
-
                 instance.conn = conn;
-
-                return res(conn);
+                cb(err, conn);
+            }
+        );
+    } else {
+        // promise api
+        return bluebird.fromCallback(function(cb) {
+            return raw_connect(instance.params, instance.socketOptions, cb);
+        })
+        .then(function(conn) {
+            return new NoviceAMQPChannelModel(conn, instance.defaultHeaders);
         });
-    });
+    }
 }

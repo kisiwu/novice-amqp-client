@@ -57,5 +57,5 @@ typings/
 # dotenv environment variables file
 .env
 
-#
-test/test.js
+# local tests
+test/_others
