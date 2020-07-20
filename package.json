@@ -1,7 +1,7 @@
 {
   "name": "novice-amq-client",
   "private": false,
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "'amqplib' wrapper: send messages with predefined headers",
   "main": "index.js",
   "repository": {
@@ -25,6 +25,6 @@
     "amqplib": "^0.5.2"
   },
   "devDependencies": {
-    "kaukau": "0.0.70"
+    "kaukau": "0.0.71"
   }
 }
