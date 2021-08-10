@@ -1,5 +1,5 @@
 {
-  "name": "@novice1/amq-client",
+  "name": "@novice1/amqp-client",
   "private": false,
   "version": "0.1.0",
   "description": "AMQP 0-9-1 client. Sends messages with predefined headers.",
