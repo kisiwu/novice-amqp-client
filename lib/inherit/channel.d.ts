@@ -1,9 +1,9 @@
 import { Channel, Options } from 'amqplib';
 
-declare interface AMQPChannel extends Channel {
+export interface AMQPChannel extends Channel {
 }
 
-class AMQPChannel extends Channel {
+export class AMQPChannel implements Channel {
   constructor(connection: any, defaultHeaders?: Record<string, any>);
 
   publish(exchange: string, routingKey: string, content: Buffer, options?: Options.Publish): boolean;

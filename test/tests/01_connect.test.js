@@ -1,12 +1,12 @@
 const bluebird = require('bluebird');
-const AMQClient = require('../../index');
+const { AMQPClient } = require('../../index');
 
 describe('Connection with predefined headers', function() {
   const { params, logger, tester } = this.ctx.kaukau;
 
   describe('Callback API', () => {
     before((done) => {
-      let amqClient = new AMQClient(
+      let amqClient = new AMQPClient(
         params('amqp'),
         null,
         // predefined headers for all messages sent (e.g.: {port: 80})
@@ -28,7 +28,7 @@ describe('Connection with predefined headers', function() {
 
   describe('Promise API', () => {
     before((done) => {
-      let amqClient = new AMQClient(
+      let amqClient = new AMQPClient(
         params('amqp'),
         null,
         // predefined headers for all messages sent (e.g.: {port: 80})

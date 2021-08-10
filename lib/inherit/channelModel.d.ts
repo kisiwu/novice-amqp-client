@@ -1,11 +1,11 @@
 import { Connection } from 'amqplib';
 import Bluebird from 'bluebird';
-import AMQPChannel from './channel';
+import { AMQPChannel } from './channel';
 
-declare interface AMQPModel extends Connection {
+export interface AMQPModel extends Connection {
 }
 
-class AMQPModel extends Connection {
+export class AMQPModel implements Connection {
   constructor(connection: any, defaultHeaders?: Record<string, any>);
 
   createChannel(): Bluebird<AMQPChannel>;

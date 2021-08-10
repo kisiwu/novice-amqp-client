@@ -1,8 +1,8 @@
 {
   "name": "@novice1/amq-client",
   "private": false,
-  "version": "0.0.4",
-  "description": "AMQP 0-9-1 client. Sends messages with predefined headers",
+  "version": "0.1.0",
+  "description": "AMQP 0-9-1 client. Sends messages with predefined headers.",
   "main": "index.js",
   "repository": {
     "type": "git",

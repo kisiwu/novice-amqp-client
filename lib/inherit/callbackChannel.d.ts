@@ -1,9 +1,9 @@
 import { Channel, Options } from 'amqplib/callback_api'
 
-declare interface AMQPCallbackChannel extends Channel {
+export interface AMQPCallbackChannel extends Channel {
 }
 
-class AMQPCallbackChannel extends Channel {
+export class AMQPCallbackChannel implements Channel {
   constructor(connection: any, defaultHeaders?: Record<string, any>);
 
   publish(exchange: string, routingKey: string, content: Buffer, options?: Options.Publish): boolean;

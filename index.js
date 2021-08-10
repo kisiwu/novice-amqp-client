@@ -19,6 +19,7 @@ function amqplibCallbackConnect(url, options, defaultHeaders, cb) {
 }
 
 exports = module.exports = AMQPClient;
+exports.AMQPClient = AMQPClient;
 
 function AMQPClient(url, socketOptions, defaultHeaders) {
   this.url = url;

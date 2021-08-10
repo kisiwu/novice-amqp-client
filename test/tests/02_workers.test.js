@@ -2,6 +2,11 @@ const ip = require('ip');
 const generateId = require('../generateId');
 
 describe('Work queues', function() {
+  /**
+   * @type {{tester: {
+   * open: import('bluebird')<import('../../lib/inherit/channelModel')>
+   * }}} tester
+   */
   const { params, logger, tester } = this.ctx.kaukau;
 
   describe('Callback API', () => {
