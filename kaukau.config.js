@@ -19,7 +19,7 @@ module.exports = {
     amqp: {
       protocol: process.env.TEST_PROTOCOL || 'amqp',
       hostname: process.env.TEST_HOSTNAME || '192.168.99.100',
-      port: process.env.TEST_PORT || 5672,
+      port: process.env.TEST_PORT/* || 5672*/,
       username: process.env.TEST_USERNAME || 'guest',
       password: process.env.TEST_PASSWORD || 'guest',
       vhost: process.env.TEST_VHOST || '',
