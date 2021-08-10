@@ -62,7 +62,7 @@ consumer.connect().then((conn) => {
           let senderIP = msg.properties.headers.senderIP;
           let clientCodeHeader = msg.properties.headers.clientCode;
           let body = msg.content.toString();
-          console.log(" [x] Received '%s' from '%s' with clientCode '%s'", body, senderIP clientCodeHeader);
+          console.log(" [x] Received '%s' from '%s' with clientCode '%s'", body, senderIP, clientCodeHeader);
         });
       });
   })
