@@ -1,25 +1,24 @@
-var kaukau = require("kaukau");
-var Parameters = kaukau.Parameters;
-var Tester = kaukau.Tester;
-var Logger = kaukau.Logger;
-var ip = require("ip");
-var generateId = require("../generateId");
+const ip = require("ip");
+const generateId = require("../generateId");
 
-describe("Publish/Subscribe", () => {
+describe("Publish/Subscribe", function() {
+
+  const { params, logger, tester } = this.ctx.kaukau;
+
   describe("Callback API", () => {
-    var message;
-    var messageContent = { data: "Data for subscribers" };
+    let message;
+    let messageContent = { data: "Data for subscribers" };
 
     // create sender and worker channels
     before(done => {
-      var conn = Tester.connection;
-      var exchange = `test_many_${generateId()}`;
+      let conn = tester.connection;
+      let exchange = `test_many_${generateId()}`;
 
-      var publisher = function publisher() {
+      let publisher = function publisher() {
         // publisher
         conn.createChannel((err, channel) => {
           if (err) {
-            Logger.error(err);
+            logger.error(err);
             done(err);
           } else {
             channel.assertExchange(exchange, "fanout", {
@@ -42,7 +41,7 @@ describe("Publish/Subscribe", () => {
       // subscriber
       conn.createChannel((err, channel) => {
         if (err) {
-          Logger.error(err);
+          logger.error(err);
           done(err);
         } else {
           channel.assertExchange(exchange, "fanout", {
@@ -57,7 +56,7 @@ describe("Publish/Subscribe", () => {
             },
             function(error2, q) {
               if (error2) {
-                Logger.error(error2);
+                logger.error(error2);
                 return done(error2);
               }
 
@@ -71,7 +70,7 @@ describe("Publish/Subscribe", () => {
                   // unbind queue from exchange
                   channel.unbindQueue(q.queue, exchange, "", {}, err => {
                     if (err) {
-                      Logger.error(
+                      logger.error(
                         `could not unbind queue from exchange '${exchange}'`
                       );
                     }
@@ -82,7 +81,7 @@ describe("Publish/Subscribe", () => {
                       { ifUnused: false },
                       err2 => {
                         if (err2) {
-                          Logger.error(
+                          logger.error(
                             `could not delete exchange '${exchange}'`
                           );
                         }
@@ -116,7 +115,7 @@ describe("Publish/Subscribe", () => {
     });
 
     it("should have default headers", function(done) {
-      var dh = Parameters("defaultHeaders");
+      let dh = params("defaultHeaders");
       expect(message.properties.headers)
         .to.be.an("object")
         .that.includes.all.keys(dh);
@@ -129,7 +128,7 @@ describe("Publish/Subscribe", () => {
     });
 
     it("should have message content", function(done) {
-      var content = message.content;
+      let content = message.content;
       expect(content).to.be.an.instanceof(Buffer);
       content = JSON.parse(content.toString());
       expect(content)

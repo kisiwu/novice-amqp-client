@@ -1,27 +1,26 @@
-var kaukau = require("kaukau");
-var Parameters = kaukau.Parameters;
-var Tester = kaukau.Tester;
-var Logger = kaukau.Logger;
-var ip = require("ip");
-var generateId = require("../generateId");
+const ip = require("ip");
+const generateId = require("../generateId");
 
-describe("RPC", () => {
+describe("RPC", function() {
+
+  const { params, logger, tester } = this.ctx.kaukau;
+
   describe("Callback API", () => {
-    var request;
-    var requestContent = { data: "Request from the client" };
-    var response;
-    var responseContent = { data: "Response from the server" };
+    let request;
+    let requestContent = { data: "Request from the client" };
+    let response;
+    let responseContent = { data: "Response from the server" };
 
     // create sender and worker channels
     before(done => {
-      var conn = Tester.connection;
-      var requestQueue = `test_rpc_${generateId()}`;
+      let conn = tester.connection;
+      let requestQueue = `test_rpc_${generateId()}`;
 
-      var client = function client() {
+      let client = function client() {
         // client
         conn.createChannel((err, channel) => {
           if (err) {
-            Logger.error(err);
+            logger.error(err);
             done(err);
           } else {
             channel.assertQueue(
@@ -32,12 +31,12 @@ describe("RPC", () => {
               function(error2, q) {
                 if (error2) {
                   channel.close();
-                  Logger.error(error2);
+                  logger.error(error2);
                   return done(error2);
                 }
 
                 // create a request id
-                var correlationId = Math.random().toString();
+                let correlationId = Math.random().toString();
 
                 // waiting on the response on channel queue
                 channel.consume(
@@ -69,11 +68,11 @@ describe("RPC", () => {
         });
       };
 
-      var server = function server() {
+      let server = function server() {
         // server
         conn.createChannel((err, channel) => {
           if (err) {
-            Logger.error(err);
+            logger.error(err);
             done(err);
           } else {
             channel.assertQueue(requestQueue, {
@@ -132,7 +131,7 @@ describe("RPC", () => {
     });
 
     it("should have default headers in request", function(done) {
-      var dh = Parameters("defaultHeaders");
+      let dh = params("defaultHeaders");
       expect(request.properties.headers)
         .to.be.an("object")
         .that.includes.all.keys(dh);
@@ -145,7 +144,7 @@ describe("RPC", () => {
     });
 
     it("should have request content", function(done) {
-      var content = request.content;
+      let content = request.content;
       expect(content).to.be.an.instanceof(Buffer);
       content = JSON.parse(content.toString());
       expect(content)
@@ -169,7 +168,7 @@ describe("RPC", () => {
     });
 
     it("should have default headers in response", function(done) {
-      var dh = Parameters("defaultHeaders");
+      let dh = params("defaultHeaders");
       expect(response.properties.headers)
         .to.be.an("object")
         .that.includes.all.keys(dh);
@@ -182,7 +181,7 @@ describe("RPC", () => {
     });
 
     it("should have response content", function(done) {
-      var content = response.content;
+      let content = response.content;
       expect(content).to.be.an.instanceof(Buffer);
       content = JSON.parse(content.toString());
       expect(content)

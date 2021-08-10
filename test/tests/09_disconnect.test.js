@@ -1,20 +1,19 @@
-var kaukau = require("kaukau");
-var Tester = kaukau.Tester;
+describe("Disconnect", function() {
 
-describe("Disconnect", () => {
+  const { logger, tester } = this.ctx.kaukau;
 
   describe("Callback API", () => {
     it("should disconnect", function(done) {
-      Tester.connection.on("close", () => {
+      tester.connection.on("close", () => {
         done();
       });
-      Tester.connection.close();
+      tester.connection.close();
     });
   });
 
   describe("Promise API", () => {
     it("should disconnect", function(done) {
-      Tester.open.then(function(conn) {
+      tester.open.then(function(conn) {
         // process.once('SIGINT', conn.close.bind(conn));
         conn.close();
         done();
