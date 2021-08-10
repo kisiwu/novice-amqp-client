@@ -14,7 +14,8 @@
   },
   "keywords": [
     "anmqp",
-    "message"
+    "message",
+    "rabbitmq"
   ],
   "author": "demingongo (https://github.com/demingongo)",
   "license": "MIT",
