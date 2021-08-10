@@ -1,11 +1,9 @@
 # @novice1/amqp-client
 
 AMQP 0-9-1 client. Sends messages with predefined headers.
-[amqplib library](https://www.npmjs.com/package/amqplib) wrapper.
+Extends [amqplib](https://www.npmjs.com/package/amqplib).
 
 ## Installation
-
-Make sure you have installed [amqplib](https://www.npmjs.com/package/amqplib).
 
 ```bash
 $ npm install @novice1/amqp-client
