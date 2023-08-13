@@ -16,6 +16,7 @@ module.exports = {
     color: true,
   },
   parameters: {
+    // tested with CloudAMQP
     amqp: {
       protocol: process.env.TEST_PROTOCOL || 'amqp',
       hostname: process.env.TEST_HOSTNAME || '192.168.99.100',
