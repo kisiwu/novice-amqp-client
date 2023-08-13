@@ -108,10 +108,10 @@ describe('Work queues', function() {
 
       function createPublisher() {
         tester.open
-          .then((conn) => {
+          .then(async (conn) => {
             return conn.createChannel();
           })
-          .then((ch) => {
+          .then(async (ch) => {
             return ch
               .assertQueue(workQueue, { durable: false })
               .then(function () {
@@ -132,14 +132,18 @@ describe('Work queues', function() {
 
       function createConsumer() {
         tester.open
-          .then((conn) => {
+          .then(async (conn) => {
             return conn.createChannel();
           })
-          .then((ch) => {
+          .then(async (ch) => {
             return ch
               .assertQueue(workQueue, { durable: false })
               .then(function () {
-                let v = ch.consume(workQueue, function (msg) {
+                let v = ch.consume(workQueue, async function (msg) {
+                  // problem: for some reason we receive a 2nd msg that is null. donot handle it
+                  if (!msg) {
+                    return;
+                  }
                   message = msg;
                   ch.ack(msg);
 
@@ -170,6 +174,7 @@ describe('Work queues', function() {
     });
 
     it("should have 'senderIP' header", function (done) {
+      console.log("read message.properties .....")
       expect(message.properties.headers)
         .to.be.an('object')
         .that.has.property('senderIP', ip.address());
@@ -177,6 +182,7 @@ describe('Work queues', function() {
     });
 
     it('should have default headers', function (done) {
+      console.log("read message.properties .....")
       let dh = params('defaultHeaders');
       expect(message.properties.headers)
         .to.be.an('object')

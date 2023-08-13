@@ -1,3 +1,3 @@
-require('chai/register-assert');  // Using Assert style
-require('chai/register-expect');  // Using Expect style
-require('chai/register-should');  // Using Should style
+global.assert = require('chai').assert;  // Using Assert style
+global.expect = require('chai').expect;  // Using Expect style
+global.should = require('chai').should();  // Using Should style

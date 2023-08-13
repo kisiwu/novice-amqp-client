@@ -1,7 +1,7 @@
 {
   "name": "@novice1/amqp-client",
   "private": false,
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "AMQP 0-9-1 client. Sends messages with predefined headers.",
   "main": "index.js",
   "repository": {
@@ -20,11 +20,13 @@
   "author": "demingongo (https://github.com/demingongo)",
   "license": "MIT",
   "dependencies": {
-    "amqplib": "^0.8.0",
-    "ip": "^1.1.5"
+    "amqplib": "^0.10.3",
+    "bluebird": "^3.7.2",
+    "ip": "^1.1.8"
   },
   "devDependencies": {
-    "@types/amqplib": "^0.8.1",
-    "kaukau": "^1.0.0"
+    "@types/amqplib": "^0.10.1",
+    "chai": "^4.3.7",
+    "kaukau": "^3.0.0"
   }
 }
